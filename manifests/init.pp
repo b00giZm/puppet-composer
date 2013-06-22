@@ -4,7 +4,7 @@ class composer {
   $composer_command_name = 'composer'
 
   exec { 'composer-install':
-    command => "wget -O ${composer_command_name} ${::composer::params::phar_location}",
+    command => "wget -O ${composer_command_name} http://getcomposer.org/composer.phar",
     cwd     => $boxen::config::bindir,
     unless  => "test -f ${boxen::config::bindir}/${composer_command_name}",
   }
