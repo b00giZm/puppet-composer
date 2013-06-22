@@ -1,66 +1,64 @@
-puppet-composer
-===============
+# Using this Template
 
-[![Build Status](https://secure.travis-ci.org/willdurand/puppet-composer.png)](http://travis-ci.org/willdurand/puppet-composer)
+Bootstrap it:
 
-This module installs [Composer](http://getcomposer.org/), a dependency manager
-for PHP.
+```
+mkdir -p ~/src/boxen/puppet-mynewmodule
+cd ~/src/boxen/puppet-mynewmodule
+git init .
+git remote add template https://github.com/boxen/puppet-template.git
+git fetch template
+git checkout -b master template/master
+```
 
-Installation
-------------
+Now we're ready to make it our own!
 
-This module doesn't have any hard dependencies but you need a PHP environment
-**and** `wget`.
+```
+script/cibuild
+.bundle/binstubs/rspec-puppet-init
+```
 
-Get the module:
+Now you'll need to edit `manifests/init.pp` and `spec/classes/template_spec.rb`
+for your module.
+If your module has other dependencies, be sure to update
+`spec/fixtures/Puppetfile`.
+From then on, you can use `script/cibuild` to run the tests.
 
-    git clone git://github.com/willdurand/puppet-composer.git modules/composer
+When you're ready to push:
 
+```
+git create githubusername/puppet-mynewmodule
+git push origin master
+```
 
-Usage
------
+The rest of the README as follows can be used as a template for your module's README.
 
-Include the `composer` class:
+# Template Puppet Module for Boxen
 
-    include composer
+An example of how we write Puppet modules for Boxen. Replace this
+paragraph with a short explanation of what the heck makes your module
+useful.
 
-You can specify the command name you want to get, and the target directory (aka
-where to install Composer):
+A great module has a working travis build
 
-    class { 'composer':
-      command_name => 'composer',
-      target_dir   => '/usr/local/bin'
-    }
+[![Build Status](https://travis-ci.org/boxen/puppet-template.png?branch=master)](https://travis-ci.org/boxen/puppet-template)
 
-You can also auto update composer by using the `auto_update` parameter. This will
-update Composer **only** when you will run Puppet.
+## Usage
 
-    class { 'composer':
-      auto_update => true
-    }
+```puppet
+boxen::example { 'best example ever':
+  salutation => 'fam'
+}
+```
 
-You can specify a particular `user` that will be the owner of the Composer
-executable:
+## Required Puppet Modules
 
-    class { 'composer':
-      user => 'foo',
-    }
+* `boxen`
+* `anything-else`
 
+## Development
 
-Running the tests
------------------
+Set `GITHUB_API_TOKEN` in your shell with a [Github oAuth Token](https://help.github.com/articles/creating-an-oauth-token-for-command-line-use) to raise your API rate limit. You can get some work done without it, but you're less likely to encounter errors like `Unable to find module 'boxen/puppet-boxen' on https://github.com`.
 
-Install the dependencies using [Bundler](http://gembundler.com):
-
-    BUNDLE_GEMFILE=.gemfile bundle install
-
-Run the following command:
-
-    BUNDLE_GEMFILE=.gemfile bundle exec rake spec
-
-
-License
--------
-
-puppet-composer is released under the MIT License. See the bundled LICENSE file
-for details.
+Then write some code. Run `script/cibuild` to test it. Check the `script`
+directory for other useful tools.
