@@ -1,4 +1,5 @@
 class composer {
+  include wget
 
   $composer_command_name = 'composer'
 
